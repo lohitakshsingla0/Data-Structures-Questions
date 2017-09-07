@@ -26,7 +26,6 @@ void create()
    if(start==NULL)
    {
        start=ptr;
-       start->link=start;
    }
    else
    {
@@ -34,56 +33,59 @@ void create()
    }
    temp=ptr;
    }
-   ptr->link=start;
+   ptr->link=NULL;
  }
 
 
 
+ void delete_all_nodes()
+ {
+     node *ptr,*ptr1,*temp,*prev=NULL;
+     ptr=start;
+     ptr1=ptr->link;
+     while(ptr!=NULL)
+     {
+         if(ptr1->value%2==0)
+         {
+             ptr->link=ptr1->link;
+             delete ptr1;
+             ptr1=ptr->link;
+         }
+         else{
+                ptr=ptr->link;
+                ptr1=ptr1->link;
+         }
+     }
+    if(start->value%2==0)
+    {
+    ptr=start;
+    start=start->link;
+    delete ptr;
+    }
 
 
 
+ }
 void display()
 {
 node *ptr;
 ptr=start;
-
-cout<<ptr->value<<endl;
-ptr=ptr->link;
-while(ptr!=start)
+while(ptr!=NULL)
 {
 cout<<ptr->value<<endl;
 ptr=ptr->link;
 }
+
+
 }
 
-void insertion()
-{
-node *ptr=new node;
-node *newnode=new node;
-newnode->value=55;
-newnode->link=NULL;
-if(start==NULL)
-{
-start=newnode;
-start->link=start;
-}
-else
-{
-ptr=start;
-ptr=ptr->link;
-while(ptr->link!=start)
-{
-    ptr=ptr->link;
-}
-ptr->link=newnode;
-newnode->link=start;
-start=newnode;
-}
-}
+
+
+
 
 int main()
 {
     create();
-insertion();
+delete_all_nodes();
 display();
 }
